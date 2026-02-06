@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Robin Morand – Pub Shake & Break</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="icon" href="../img/favicon.png">
+  </head>
+  <body>
+    <!-- En-tête -->
+    <header>
+      <nav>
+        <a href="../index.html" class="logo"><img src="../img/logo.svg" alt="Robin Morand"></a>
+        <a href="../projets.html">Projets</a>      
+        <a href="../galerie.html">Galerie</a>
+        <a href="../apropos.html">À propos</a>
+      </nav>
+    </header>
+
+    <!-- Contenu principal -->
+    <main class="project-page">
+        <section class="project-hero">
+            <div class="project-video">
+                <video src="../vid/Pub.mp4" autoplay muted loop></video>
+            </div>
+            <div class="project-header">
+                <h1>Pub Shake & Break</h1>
+                <p class="project-domains">Captation Vidéo, 3D, VFX, Mixage, Montage</p>
+            </div>
+        </section>
+        <section class="project-content">
+            <div class="project-description">
+                <p>Pub Shake & Break est un projet de captation vidéo, 3D, VFX, mixage et montage. Ce projet combine plusieurs techniques créatives pour créer une expérience visuelle impactante.</p>
+                <p>Le projet met en scène une dynamique visuelle unique alliant captation vidéo réelle et éléments 3D générés, créant une fusion entre le réel et le virtuel.</p>
+                <p>Les effets visuels et le mixage audio travaillent ensemble pour créer une atmosphère immersive et percutante.</p>
+            </div>
+            <div class="project-gallery">
+                <img src="../img/projets/pub-shake-break/1.jpg" alt="Pub Shake & Break">
+                <img src="../img/projets/pub-shake-break/2.jpg" alt="Pub Shake & Break">
+                <img src="../img/projets/pub-shake-break/3.jpg" alt="Pub Shake & Break">
+            </div>
+        </section>
+    </main>
+
+<!-- Pied de page -->
+<footer>
+    <a href="../index.html">robin.</a>
+    <a href="mailto:ROBINMORAND.STUDIO@GMAIL.COM" target="_blank">ROBINMORAND.STUDIO@GMAIL.COM</a>
+    <a href="https://www.linkedin.com/in/robin-morand/" target="_blank">LINKEDIN</a>
+    <a href="CV.pdf" target="_blank">CV</a>
+  </footer>
+  <script>
+    // Effet parallax pour la page projet
+    const projectVideo = document.querySelector('.project-video');
+    const projectHeader = document.querySelector('.project-header');
+    
+    if (projectVideo && projectHeader) {
+      window.addEventListener('scroll', function() {
+        const scrolled = window.pageYOffset;
+        const videoHeight = projectVideo.offsetHeight;
+        
+        // Effet parallax sur la vidéo (se déplace plus lentement)
+        if (scrolled < videoHeight) {
+          const parallaxSpeed = 0.5;
+          projectVideo.style.transform = `translateY(${scrolled * parallaxSpeed}px)`;
+          
+          // Faire défiler le header plus rapidement (effet parallax inverse)
+          projectHeader.style.transform = `translateY(${scrolled * 0.3}px)`;
+          
+          // Opacité du header qui diminue au scroll
+          const opacity = 1 - (scrolled / videoHeight);
+          projectHeader.style.opacity = Math.max(0, opacity);
+        }
+      }, { passive: true });
+    }
+  </script>
+</body>
+</html>
+

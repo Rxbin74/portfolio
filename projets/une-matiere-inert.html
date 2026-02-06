@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Robin Morand – Court métrage "Une Matière Inerte"</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="icon" href="../img/favicon.png">
+  </head>
+  <body>
+    <!-- En-tête -->
+    <header>
+      <nav>
+        <a href="../index.html" class="logo"><img src="../img/logo.svg" alt="Robin Morand"></a>
+        <a href="../projets.html">Projets</a>      
+        <a href="../galerie.html">Galerie</a>
+        <a href="../apropos.html">À propos</a>
+      </nav>
+    </header>
+
+    <!-- Contenu principal -->
+    <main class="project-page">
+        <section class="project-hero">
+            <div class="project-video">
+                <video src="../vid/Court metrage.mp4" autoplay muted loop></video>
+            </div>
+            <div class="project-header">
+                <h1>Court métrage "Une Matière Inerte"</h1>
+                <p class="project-domains">Captation Vidéo, Montage, Colorimétrie, Composition, Mixage</p>
+            </div>
+        </section>
+        <section class="project-content">
+            <div class="project-description">
+                <p>"Une Matière Inerte" est un court métrage réalisé avec une attention particulière portée à la captation vidéo, au montage, à la colorimétrie, à la composition et au mixage. Un projet cinématographique qui explore les limites de la narration visuelle.</p>
+                <p>La captation vidéo capture l'essence de chaque scène, tandis que le montage construit le rythme et la tension narrative. La colorimétrie apporte une dimension émotionnelle unique à chaque plan.</p>
+                <p>La composition et le mixage travaillent ensemble pour créer une expérience audiovisuelle complète, où chaque élément contribue à l'atmosphère générale du film.</p>
+            </div>
+            <div class="project-gallery">
+                <img src="../img/projets/une-matiere-inert/1.jpg" alt="Court métrage Une Matière Inerte">
+                <img src="../img/projets/une-matiere-inert/2.jpg" alt="Court métrage Une Matière Inerte">
+                <img src="../img/projets/une-matiere-inert/3.jpg" alt="Court métrage Une Matière Inerte">
+            </div>
+        </section>
+    </main>
+
+<!-- Pied de page -->
+<footer>
+    <a href="../index.html">robin.</a>
+    <a href="mailto:ROBINMORAND.STUDIO@GMAIL.COM" target="_blank">ROBINMORAND.STUDIO@GMAIL.COM</a>
+    <a href="https://www.linkedin.com/in/robin-morand/" target="_blank">LINKEDIN</a>
+    <a href="CV.pdf" target="_blank">CV</a>
+  </footer>
+  <script>
+    // Effet parallax pour la page projet
+    const projectVideo = document.querySelector('.project-video');
+    const projectHeader = document.querySelector('.project-header');
+    
+    if (projectVideo && projectHeader) {
+      window.addEventListener('scroll', function() {
+        const scrolled = window.pageYOffset;
+        const videoHeight = projectVideo.offsetHeight;
+        
+        // Effet parallax sur la vidéo (se déplace plus lentement)
+        if (scrolled < videoHeight) {
+          const parallaxSpeed = 0.5;
+          projectVideo.style.transform = `translateY(${scrolled * parallaxSpeed}px)`;
+          
+          // Faire défiler le header plus rapidement (effet parallax inverse)
+          projectHeader.style.transform = `translateY(${scrolled * 0.3}px)`;
+          
+          // Opacité du header qui diminue au scroll
+          const opacity = 1 - (scrolled / videoHeight);
+          projectHeader.style.opacity = Math.max(0, opacity);
+        }
+      }, { passive: true });
+    }
+  </script>
+</body>
+</html>
+

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Robin Morand – Projets</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="img/favicon.png">
+  </head>
+  <body>
+    <!-- En-tête -->
+    <header>
+      <nav>
+        <a href="index.html" class="logo"><img src="img/logo.svg" alt="Robin Morand"></a>
+        <a href="projets.html">Projets</a>
+        <a href="galerie.html">Galerie</a>
+        <a href="apropos.html">À propos</a>
+      </nav>
+    </header>
+
+    <!-- Contenu principal -->
+    <main>
+      <h1>Projets</h1>
+      <p>Créatif multidisciplinaire en motion design, vidéo et son. 
+        <br>
+        Je crée des compositions visuelles sensibles et 
+        <br>
+        impactantes pour des studios, startups ou agences.</p>
+      <section class="projects-container loop">
+        <div class="projects-wrapper">
+          <section class="project">
+            <a class="project-link" href="projets/div-protocol.html"><video src="vid/DIV Protocol.mp4" autoplay muted loop></video></a>
+            <div>
+              <h2 class="project-title">DIV Protocol</h2>
+              <p class="project-description">Product design, Motion Design, 3D, Communication visuelle, UI/UX</p>
+            </div>
+          </section>
+          
+          <section class="project">
+            <a class="project-link" href="projets/pub-shake-break.html"><video src="vid/Pub.mp4" autoplay muted loop></video></a>
+            <div>
+              <h2 class="project-title">Pub Shake & Break</h2>
+              <p class="project-description">Captation Vidéo, 3D, VFX, Mixage, Montage</p>
+            </div>
+          </section>
+
+          <section class="project">
+            <a class="project-link" href="projets/trame-media.html"><video src="vid/Trame.mp4" autoplay muted loop></video></a>
+            <div>
+              <h2 class="project-title">Trame Media</h2>
+              <p class="project-description">Motion Design, Captation vidéo, Montage, Mixage, Sound design</p>
+            </div>
+          </section>
+          
+          <section class="project">
+            <a class="project-link" href="projets/autotune.html"><video src="vid/Autotune.mp4" autoplay muted loop></video></a>
+            <div>
+              <h2 class="project-title">Comment fonctionne l'Autotune ?</h2>
+              <p class="project-description">Motion Design, Graphisme, Enregistrement audio, Mixage, Composition</p>
+            </div>
+          </section>
+
+          <section class="project">
+            <a class="project-link" href="projets/une-matiere-inert.html"><video src="vid/Court metrage.mp4" autoplay muted loop></video></a>
+            <div>
+              <h2 class="project-title">Court métrage "Une Matière Inerte"</h2>
+              <p class="project-description">Captation Vidéo, Montage, Colorimétrie, Composition, Mixage</p>
+            </div>
+          </section>
+
+          <section class="project">
+            <a class="project-link" href="projets/biais-cognitif.html"><video src="vid/Biais.mp4" autoplay muted loop></video></a>
+            <div>
+              <h2 class="project-title">Biais cognitif : le phénomène Baader-Meinhof</h2>
+              <p class="project-description">Motion Design, Graphisme, Enregistrement audio, Mixage, Composition</p>
+            </div>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <!-- Pied de page -->
+    <footer>
+      <a href="index.html">robin.</a>
+      <a href="mailto:ROBINMORAND.STUDIO@GMAIL.COM" target="_blank">ROBINMORAND.STUDIO@GMAIL.COM</a>
+      <a href="https://www.linkedin.com/in/robin-morand/" target="_blank">LINKEDIN</a>
+      <a href="CV.pdf" target="_blank">CV</a>
+    </footer>
+    <script>
+      // Convertir le scroll vertical en déplacement horizontal sans faire défiler la page
+      const wrapper = document.querySelector('.projects-wrapper');
+      const container = document.querySelector('.projects-container');
+      
+      if (wrapper && container) {
+        let currentPosition = 0;
+        let targetPosition = 0;
+        let velocity = 0;
+        let isScrolling = false;
+        let animationFrameId = null;
+        
+        // Calculer les dimensions
+        const wrapperWidth = wrapper.scrollWidth;
+        const containerWidth = container.clientWidth;
+        const maxScroll = Math.max(0, wrapperWidth - containerWidth);
+        
+        // Vitesse de défilement (ajustez cette valeur)
+        const scrollSpeed = 2;
+        
+        // Paramètres pour l'easing - ajustés pour un arrêt plus lent et smooth
+        const baseFriction = 0.92; // Friction de base (plus proche de 1 = ralentissement plus lent)
+        const minVelocity = 0.01; // Vitesse minimale avant d'arrêter (plus petit = continue plus longtemps)
+        const slowDownThreshold = 5; // Seuil de vitesse pour augmenter la friction
+        
+        // Fonction pour calculer la friction dynamique (augmente quand la vitesse diminue)
+        function getDynamicFriction(vel) {
+          const absVel = Math.abs(vel);
+          if (absVel < slowDownThreshold) {
+            // Augmenter progressivement la friction quand on ralentit
+            const progress = absVel / slowDownThreshold;
+            return baseFriction + (0.05 * (1 - progress)); // Friction jusqu'à 0.97
+          }
+          return baseFriction;
+        }
+        
+        // Fonction pour mettre à jour la position avec easing
+        function updatePosition() {
+          // Limiter la position cible entre 0 et maxScroll
+          targetPosition = Math.max(0, Math.min(targetPosition, maxScroll));
+          
+          // Calculer la différence
+          const diff = targetPosition - currentPosition;
+          
+          // Appliquer l'easing avec interpolation plus lente pour un arrêt plus smooth
+          if (Math.abs(diff) > 0.05) {
+            // Interpolation plus lente (0.05 au lieu de 0.1) pour un mouvement plus doux
+            const interpolationSpeed = Math.abs(velocity) < 1 ? 0.03 : 0.06; // Encore plus lent quand on ralentit
+            currentPosition += diff * interpolationSpeed;
+          } else {
+            currentPosition = targetPosition;
+          }
+          
+          // Appliquer la position avec transition CSS pour plus de fluidité
+          wrapper.style.transform = `translateX(-${currentPosition}px)`;
+          
+          // Transition plus longue quand on ralentit
+          if (Math.abs(velocity) < 2) {
+            wrapper.style.transition = 'transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+          }
+        }
+        
+        // Fonction d'animation avec momentum et friction progressive
+        function animate() {
+          if (Math.abs(velocity) > minVelocity) {
+            // Appliquer la friction dynamique (augmente quand on ralentit)
+            const dynamicFriction = getDynamicFriction(velocity);
+            velocity *= dynamicFriction;
+            targetPosition += velocity;
+            
+            // Limiter la position
+            targetPosition = Math.max(0, Math.min(targetPosition, maxScroll));
+            
+            updatePosition();
+            animationFrameId = requestAnimationFrame(animate);
+          } else {
+            // Arrêter l'animation quand la vitesse est trop faible
+            velocity = 0;
+            isScrolling = false;
+            // Transition finale très smooth pour l'arrêt complet
+            wrapper.style.transition = 'transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+            updatePosition();
+          }
+        }
+        
+        // Intercepter les événements de scroll (molette, trackpad)
+        document.addEventListener('wheel', function(e) {
+          // Empêcher le scroll vertical par défaut
+          e.preventDefault();
+          
+          // Convertir le scroll vertical en déplacement horizontal
+          const delta = e.deltaY * scrollSpeed;
+          
+          // Mettre à jour la position cible
+          targetPosition += delta;
+          
+          // Ajouter de la vélocité pour l'effet momentum
+          velocity += delta * 0.5;
+          
+          // Limiter la vélocité maximale
+          velocity = Math.max(-20, Math.min(20, velocity));
+          
+          // Démarrer l'animation si elle n'est pas déjà en cours
+          if (!isScrolling) {
+            isScrolling = true;
+            animate();
+          }
+          
+          updatePosition();
+        }, { passive: false });
+        
+        // Initialiser la position
+        updatePosition();
+      }
+    </script>
+  </body>
+</html>
+
+

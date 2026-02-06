@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Robin Morand – Comment fonctionne l'Autotune ?</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="icon" href="../img/favicon.png">
+  </head>
+  <body>
+    <!-- En-tête -->
+    <header>
+      <nav>
+        <a href="../index.html" class="logo"><img src="../img/logo.svg" alt="Robin Morand"></a>
+        <a href="../projets.html">Projets</a>      
+        <a href="../galerie.html">Galerie</a>
+        <a href="../apropos.html">À propos</a>
+      </nav>
+    </header>
+
+    <!-- Contenu principal -->
+    <main class="project-page">
+        <section class="project-hero">
+            <div class="project-video">
+                <video src="../vid/Autotune.mp4" autoplay muted loop></video>
+            </div>
+            <div class="project-header">
+                <h1>Comment fonctionne l'Autotune ?</h1>
+                <p class="project-domains">Motion Design, Graphisme, Enregistrement audio, Mixage, Composition</p>
+            </div>
+        </section>
+        <section class="project-content">
+            <div class="project-description">
+                <p>Ce projet explore le fonctionnement de l'Autotune à travers le motion design, le graphisme, l'enregistrement audio, le mixage et la composition. Une approche pédagogique et visuelle d'un outil emblématique de la production musicale moderne.</p>
+                <p>Le motion design permet de visualiser les concepts techniques de manière accessible, tandis que le graphisme apporte une identité visuelle forte à cette exploration.</p>
+                <p>L'enregistrement audio, le mixage et la composition démontrent concrètement l'impact de l'Autotune sur la production musicale, créant une expérience complète et immersive.</p>
+            </div>
+            <div class="project-gallery">
+                <img src="../img/projets/autotune/1.jpg" alt="Comment fonctionne l'Autotune ?">
+                <img src="../img/projets/autotune/2.jpg" alt="Comment fonctionne l'Autotune ?">
+                <img src="../img/projets/autotune/3.jpg" alt="Comment fonctionne l'Autotune ?">
+            </div>
+        </section>
+    </main>
+
+<!-- Pied de page -->
+<footer>
+    <a href="../index.html">robin.</a>
+    <a href="mailto:ROBINMORAND.STUDIO@GMAIL.COM" target="_blank">ROBINMORAND.STUDIO@GMAIL.COM</a>
+    <a href="https://www.linkedin.com/in/robin-morand/" target="_blank">LINKEDIN</a>
+    <a href="CV.pdf" target="_blank">CV</a>
+  </footer>
+  <script>
+    // Effet parallax pour la page projet
+    const projectVideo = document.querySelector('.project-video');
+    const projectHeader = document.querySelector('.project-header');
+    
+    if (projectVideo && projectHeader) {
+      window.addEventListener('scroll', function() {
+        const scrolled = window.pageYOffset;
+        const videoHeight = projectVideo.offsetHeight;
+        
+        // Effet parallax sur la vidéo (se déplace plus lentement)
+        if (scrolled < videoHeight) {
+          const parallaxSpeed = 0.5;
+          projectVideo.style.transform = `translateY(${scrolled * parallaxSpeed}px)`;
+          
+          // Faire défiler le header plus rapidement (effet parallax inverse)
+          projectHeader.style.transform = `translateY(${scrolled * 0.3}px)`;
+          
+          // Opacité du header qui diminue au scroll
+          const opacity = 1 - (scrolled / videoHeight);
+          projectHeader.style.opacity = Math.max(0, opacity);
+        }
+      }, { passive: true });
+    }
+  </script>
+</body>
+</html>
+

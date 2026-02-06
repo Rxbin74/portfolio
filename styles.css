@@ -1,0 +1,381 @@
+:root {
+    --primary-color: #031FED;
+    --secondary-color: #C8D0FC;
+    --grid-color: #c8d0fc41;
+    --white-color: #F7F6F5;
+    --black-color: #06051A;
+}
+
+html {
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+}
+
+body {
+    font-family: 'Gotham', sans-serif;
+    margin: 0;
+    padding: 0px 40px;
+    background-color: var(--white-color);
+    background-image: 
+        linear-gradient(var(--grid-color) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+    background-size: 40px 40px;
+    color: var(--black-color);
+    width: viewport-width;
+    height: viewport-height;
+}
+
+/* Empêcher le scroll vertical sur la page projets */
+body:has(.projects-container) {
+    overflow: hidden;
+    height: 100vh;
+}
+
+/* Page index : vidéo en plein écran */
+body.index-page {
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+}
+
+body.index-page main {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 1;
+}
+
+body.index-page main section {
+    width: 100%;
+    height: 100%;
+}
+
+body.index-page main video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+body.index-page header {
+    position: relative;
+    z-index: 10;
+    padding: 0 40px;
+}
+
+body.index-page footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+}
+
+/* Textes en blanc sur la page index */
+body.index-page header a,
+body.index-page footer a {
+    color: var(--white-color);
+}
+
+/* Logo blanc sur la page index */
+body.index-page .logo img {
+    filter: brightness(0) invert(1);
+}
+
+/* Logo couleur primaire sur les autres pages */
+body:not(.index-page) .logo img {
+    filter: brightness(0) saturate(100%) invert(9%) sepia(95%) saturate(7158%) hue-rotate(234deg) brightness(95%) contrast(101%);
+}
+
+a {
+    text-decoration: none;
+    color: var(--black-color);
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Titres avec Georgia Italic */
+h1{
+    font-family: 'Georgia', serif;
+    font-style: italic;
+    font-weight: normal;
+    letter-spacing: -0.05em;
+    font-size: 48px;
+    margin: 0;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 20px 0px;
+    font-size: 16px;
+    img {
+        width: 64px;
+        height: 64px;
+        object-fit: contain;
+    }
+}
+
+
+.projects-container{
+    width: 100%;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    padding: 20px 0;
+}
+
+.projects-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 40px;
+    width: max-content;
+    will-change: transform;
+}
+
+/* Animation de défilement automatique en boucle (optionnel) */
+.projects-container.auto-scroll .projects-wrapper {
+    animation: scroll-horizontal 30s linear infinite;
+}
+
+@keyframes scroll-horizontal {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+.project{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-shrink: 0; /* Empêche les projets de rétrécir */
+    width: 500px; /* Largeur fixe pour chaque projet */
+    gap: 15px;
+    
+    video{
+        width: 100%;
+        height: 300px;
+        object-fit: cover;
+        transition: transform 0.2s ease-in-out;
+    }
+
+    video:hover{
+        transform: scale(0.95);
+        transition: transform 0.2s ease-in-out;
+    }
+    
+    .project-title {
+        font-size: 18px;
+        font-weight: 500;
+        margin: 0;
+    }
+    
+    .project-description {
+        font-size: 14px;
+        margin: 0;
+        color: var(--black-color);
+        opacity: 0.7;
+    }
+    
+    .project-link {
+        display: block;
+        width: 100%;
+    }
+}
+
+.gallery{
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    gap: 10px;
+    padding: 40px 0px 80px 0px;
+    
+    img{
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+    }
+    
+    img:hover{
+        transform: scale(0.95);
+    }
+}
+
+/* Overlay pour afficher l'image en plein écran */
+.gallery-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.95);
+    z-index: 9998;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.gallery-overlay.active {
+    display: flex;
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.gallery-overlay img {
+    max-width: 90vw;
+    max-height: 90vh;
+    object-fit: contain;
+    z-index: 9999;
+}
+/* Page projet individuelle */
+/* Header et footer sur les pages projet */
+body:has(.project-page) {
+    padding: 0;
+}
+
+body:has(.project-page) header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 20;
+    padding: 0 40px;
+    background: transparent;
+}
+
+body:has(.project-page) header a {
+    color: var(--white-color);
+}
+
+body:has(.project-page) .logo img {
+    filter: brightness(0) invert(1);
+}
+
+body:has(.project-page) footer {
+    background: transparent;
+}
+
+body:has(.project-page) footer a {
+    color: var(--white-color);
+}
+
+.project-page {
+    padding: 0;
+    margin: 0;
+}
+
+.project-hero {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.project-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 1;
+}
+
+.project-video video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.project-header {
+    position: fixed;
+    top: 60%;
+    left: 40px;
+    z-index: 5;
+    text-align: left;
+    color: var(--white-color);
+    max-width: 1200px;
+    pointer-events: none;
+}
+
+.project-header h1 {
+    color: var(--white-color);
+    font-size: 64px;
+    margin-bottom: 20px;
+}
+
+.project-domains {
+    font-size: 18px;
+    color: var(--white-color);
+    opacity: 0.9;
+    margin: 0;
+    font-weight: 300;
+}
+
+.project-content {
+    position: relative;
+    z-index: 10;
+    margin-top: 100vh;
+    padding: 80px 40px;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.project-description {
+    max-width: 800px;
+    margin: 0 auto 80px;
+    font-size: 18px;
+    line-height: 1.8;
+}
+
+.project-description p {
+    margin-bottom: 30px;
+}
+
+.project-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 40px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.project-gallery img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    display: flex;
+    gap: 100px;
+    align-items: center;
+    width: 100%;
+    padding: 30px 40px;
+    font-size: 12px;
+}
+
